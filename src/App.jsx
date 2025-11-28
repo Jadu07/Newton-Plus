@@ -68,7 +68,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">Features</a>
             <a href="#install" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">How to Install</a>
-            <a href="/Newton+.zip" download="Newton+.zip" className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
+            <a href="/Newton_plus.zip" download="Newton_plus.zip" className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
               <Download className="w-4 h-4" />
               Get Extension
             </a>
@@ -86,7 +86,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t border-slate-100 p-4 space-y-4 shadow-xl">
           <a href="#features" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Features</a>
           <a href="#install" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>How to Install</a>
-          <a href="/Newton+.zip" download="Newton+.zip" className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
+          <a href="/Newton_plus.zip" download="Newton_plus.zip" className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
             Download v1.0
           </a>
         </div>
@@ -122,7 +122,7 @@ const Hero = () => {
               Stop guessing your percentage. Newton+ integrates seamlessly with your dashboard to give you real-time insights, locally and securely.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="/Newton+.zip" download="Newton+.zip" className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
+              <a href="/Newton_plus.zip" download="Newton_plus.zip" className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
                 <Download className="w-5 h-5" />
                 Install Now
               </a>

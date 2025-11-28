@@ -247,7 +247,7 @@ const Installation = () => {
                   <p className="text-slate-400 mb-4">{step.description}</p>
                   
                   {step.isDownload && (
-                    <a href="/Newton%20Attendance%20viewer.zip" download="Newton Attendance viewer.zip" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
+                    <a href="/Newton_plus.zip" download="Newton_plus.zip" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
                       <Download className="w-4 h-4" />
                       {step.action}
                     </a>

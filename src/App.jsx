@@ -35,7 +35,7 @@ const installSteps = [
     title: "Download & Unzip",
     description: "Download the ZIP file and extract it to a folder. Don't skip the extraction step!",
     icon: <Download className="w-6 h-6 text-white" />,
-    action: "Download v2.0",
+    action: "Download v2.1",
     isDownload: true
   },
   {
@@ -77,7 +77,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">Features</a>
             <a href="#install" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">How to Install</a>
-            <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
+            <a href="/newton_plus_ext_v2.1.zip" download="newton_plus_ext_v2.1.zip" className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
               <Download className="w-4 h-4" />
               Get Extension
             </a>
@@ -95,8 +95,8 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t border-slate-100 p-4 space-y-4 shadow-xl">
           <a href="#features" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Features</a>
           <a href="#install" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>How to Install</a>
-          <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
-            Download v2.0
+          <a href="/newton_plus_ext_v2.1.zip" download="newton_plus_ext_v2.1.zip" className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
+            Download v2.1
           </a>
         </div>
       )}
@@ -121,7 +121,7 @@ const Hero = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
               </span>
-              v2.0 is Live
+              v2.1 is Live
             </div>
             <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 leading-[1.1]">
               Attendance, <br />
@@ -131,7 +131,7 @@ const Hero = () => {
               Stop guessing your percentage. Newton+ integrates seamlessly with your dashboard to give you real-time insights, locally and securely.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
+              <a href="/newton_plus_ext_v2.1.zip" download="newton_plus_ext_v2.1.zip" className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
                 <Download className="w-5 h-5" />
                 Install Now
               </a>
@@ -256,7 +256,7 @@ const Installation = () => {
                   <p className="text-slate-400 mb-4">{step.description}</p>
 
                   {step.isDownload && (
-                    <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
+                    <a href="/newton_plus_ext_v2.1.zip" download="newton_plus_ext_v2.1.zip" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
                       <Download className="w-4 h-4" />
                       {step.action}
                     </a>

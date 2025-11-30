@@ -5,7 +5,7 @@ import { Download, CheckCircle, Settings, Menu, X, ChevronRight, Chrome, FolderO
 
 // NOTE: Replace this URL with the actual path to your screenshot file after moving it to your public folder.
 // Example: "/Screenshot 2025-11-27 at 8.00.13 PM.png"
-const SCREENSHOT_URL = "/screenshot.png";
+const SCREENSHOT_URL = "/screenshot_v2.png";
 
 const features = [
   {
@@ -297,6 +297,72 @@ const Installation = () => {
   );
 };
 
+const VideoTutorial = ({ videoId }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <div className="w-full relative group perspective-1000">
+      {/* Glow Effect */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
+        {/* Browser Header */}
+        <div className="bg-slate-100 border-b border-slate-200 px-4 py-3 flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-400"></div>
+            <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+            <div className="w-3 h-3 rounded-full bg-green-400"></div>
+          </div>
+          <div className="mx-auto bg-white px-4 py-1.5 rounded-md text-xs text-slate-400 shadow-sm border border-slate-200 w-1/2 text-center flex items-center justify-center gap-2 font-mono">
+            <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span> how-to-install.mp4
+          </div>
+        </div>
+
+        {/* Video Container */}
+        <div className="relative aspect-video bg-slate-900">
+          {!isPlaying ? (
+            <button
+              onClick={() => setIsPlaying(true)}
+              className="absolute inset-0 w-full h-full flex items-center justify-center bg-slate-900/50 hover:bg-slate-900/40 transition-all cursor-pointer group/btn"
+            >
+              <img
+                src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                alt="Video Tutorial"
+                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/btn:opacity-80 transition-opacity duration-500"
+              />
+
+              {/* Play Button */}
+              <div className="relative">
+                <div className="absolute inset-0 bg-indigo-500 rounded-full animate-ping opacity-20"></div>
+                <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-2xl group-hover/btn:scale-110 transition-transform duration-300 relative z-10">
+                  <div className="w-20 h-20 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-full flex items-center justify-center shadow-lg">
+                    <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[22px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute bottom-8 left-8 text-left">
+                <div className="inline-block px-3 py-1 bg-indigo-600/90 backdrop-blur-sm rounded-lg text-white text-xs font-bold uppercase tracking-wider mb-2 shadow-lg">
+                  Tutorial
+                </div>
+                <h3 className="text-white font-bold text-2xl shadow-black drop-shadow-lg">Installation Guide</h3>
+              </div>
+            </button>
+          ) : (
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0`}
+              title="Installation Tutorial"
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Footer = () => {
   return (
     <footer className="bg-white border-t border-slate-100 py-12">
@@ -323,11 +389,40 @@ const Footer = () => {
   );
 };
 
+const VideoSection = () => {
+  return (
+    <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Mesh */}
+      <div className="absolute inset-0 bg-slate-50">
+        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white via-transparent to-white"></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-4">
+            <Activity className="w-3 h-3" />
+            See it in Action
+          </div>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
+            Setup in <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">60 Seconds</span>
+          </h2>
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+            No complex configurations. Just download, install, and start tracking your attendance instantly.
+          </p>
+        </div>
+        <VideoTutorial videoId="w4aSCk2-TGM" />
+      </div>
+    </section>
+  );
+};
+
 const App = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
       <Navbar />
       <Hero />
+      <VideoSection />
       <Features />
       <Installation />
       <Footer />

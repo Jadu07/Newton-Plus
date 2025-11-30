@@ -5,7 +5,7 @@ import { Download, CheckCircle, Settings, Menu, X, ChevronRight, Chrome, FolderO
 
 // NOTE: Replace this URL with the actual path to your screenshot file after moving it to your public folder.
 // Example: "/Screenshot 2025-11-27 at 8.00.13 PM.png"
-const SCREENSHOT_URL = "/screenshot.png"; 
+const SCREENSHOT_URL = "/screenshot.png";
 
 const features = [
   {
@@ -32,22 +32,31 @@ const features = [
 
 const installSteps = [
   {
-    title: "Download Package",
-    description: "Get the latest version of Newton+ as a ZIP file. Save it somewhere safe.",
+    title: "Download & Unzip",
+    description: "Download the ZIP file and extract it to a folder. Don't skip the extraction step!",
     icon: <Download className="w-6 h-6 text-white" />,
-    action: "Download v1.0",
+    action: "Download v2.0",
     isDownload: true
   },
   {
+    title: "Open Extensions",
+    description: (
+      <span>
+        Type <a href="chrome://extensions" className="text-indigo-400 hover:text-indigo-300 font-mono bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700 transition-colors">chrome://extensions</a> in your address bar.
+      </span>
+    ),
+    icon: <Chrome className="w-6 h-6 text-white" />
+  },
+  {
     title: "Developer Mode",
-    description: "In chrome://extensions, flip the 'Developer mode' switch in the top right corner.",
+    description: "Flip the 'Developer mode' switch in the top right corner of the page.",
     icon: <Settings className="w-6 h-6 text-white" />,
     alert: "Required Step"
   },
   {
     title: "Load Unpacked",
-    description: "Click 'Load Unpacked' and select the unzipped folder. You're ready to roll.",
-    icon: <Puzzle className="w-6 h-6 text-white" />
+    description: "Click 'Load Unpacked' and select the folder you extracted in step 1.",
+    icon: <FolderOpen className="w-6 h-6 text-white" />
   }
 ];
 
@@ -64,11 +73,11 @@ const Navbar = () => {
             </div>
             <span className="font-bold text-xl text-slate-900 tracking-tight group-hover:text-indigo-600 transition-colors">Newton<span className="text-indigo-600">+</span></span>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">Features</a>
             <a href="#install" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">How to Install</a>
-            <a href="/Newton_plus.zip" download="Newton_plus.zip" className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
+            <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
               <Download className="w-4 h-4" />
               Get Extension
             </a>
@@ -86,8 +95,8 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t border-slate-100 p-4 space-y-4 shadow-xl">
           <a href="#features" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Features</a>
           <a href="#install" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>How to Install</a>
-          <a href="/Newton_plus.zip" download="Newton_plus.zip" className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
-            Download v1.0
+          <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
+            Download v2.0
           </a>
         </div>
       )}
@@ -112,7 +121,7 @@ const Hero = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
               </span>
-              v1.0 is Live
+              v2.0 is Live
             </div>
             <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 leading-[1.1]">
               Attendance, <br />
@@ -122,7 +131,7 @@ const Hero = () => {
               Stop guessing your percentage. Newton+ integrates seamlessly with your dashboard to give you real-time insights, locally and securely.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="/Newton_plus.zip" download="Newton_plus.zip" className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
+              <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
                 <Download className="w-5 h-5" />
                 Install Now
               </a>
@@ -134,9 +143,9 @@ const Hero = () => {
               <Chrome className="w-4 h-4" /> Compatible with Chrome & Brave
             </p>
           </div>
-          
+
           <div className="relative z-10 perspective-1000">
-             {/* 3D Tilt Effect Container */}
+            {/* 3D Tilt Effect Container */}
             <div className="relative transform rotate-y-[-5deg] rotate-x-[5deg] hover:rotate-0 transition-transform duration-500">
               <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-2xl blur opacity-30"></div>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
@@ -148,15 +157,15 @@ const Hero = () => {
                     <div className="w-3 h-3 rounded-full bg-slate-300"></div>
                   </div>
                   <div className="mx-auto bg-white px-4 py-1.5 rounded-md text-xs text-slate-400 shadow-sm border border-slate-200 w-2/3 text-center flex items-center justify-center gap-2">
-                     <span className="w-2 h-2 bg-green-500 rounded-full"></span> my.newtonschool.co
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span> my.newtonschool.co
                   </div>
                 </div>
-                
+
                 {/* The provided screenshot goes here */}
                 <div className="aspect-[4/3] bg-slate-50 relative group">
-                  <img 
-                    src={SCREENSHOT_URL} 
-                    alt="Newton+ Interface" 
+                  <img
+                    src={SCREENSHOT_URL}
+                    alt="Newton+ Interface"
                     className="w-full h-full object-cover object-top"
                   />
                   {/* Overlay sheen */}
@@ -194,7 +203,7 @@ const Features = () => {
             We stripped away the complexity. Newton+ gives you exactly what you need to track your progress, without the fluff.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, idx) => (
             <div key={idx} className="group p-8 rounded-3xl bg-slate-50 hover:bg-white border border-transparent hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-100/50 transition-all duration-300">
@@ -218,7 +227,7 @@ const Installation = () => {
     <section id="install" className="py-24 bg-slate-900 text-white overflow-hidden relative">
       {/* Background patterns */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-900/20 to-transparent"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
@@ -232,7 +241,7 @@ const Installation = () => {
           <div className="space-y-6">
             {installSteps.map((step, idx) => (
               <div key={idx} className="flex flex-col md:flex-row items-center md:items-start gap-6 bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:bg-slate-800 transition-colors">
-                
+
                 <div className="flex-shrink-0">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-900/50">
                     <span className="font-bold text-lg">{idx + 1}</span>
@@ -245,9 +254,9 @@ const Installation = () => {
                     {step.icon}
                   </h3>
                   <p className="text-slate-400 mb-4">{step.description}</p>
-                  
+
                   {step.isDownload && (
-                    <a href="/Newton_plus.zip" download="Newton_plus.zip" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
+                    <a href="/newton_plus_ext_v2.zip" download="newton_plus_ext_v2.zip" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
                       <Download className="w-4 h-4" />
                       {step.action}
                     </a>
@@ -256,6 +265,12 @@ const Installation = () => {
                   {step.alert && (
                     <div className="inline-block bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-1 text-amber-500 text-xs font-bold uppercase tracking-wide">
                       {step.alert}
+                    </div>
+                  )}
+
+                  {step.image && (
+                    <div className="mt-4 rounded-lg overflow-hidden border border-slate-700 shadow-lg">
+                      <img src={step.image} alt={step.title} className="w-full h-32 object-cover object-left-top" />
                     </div>
                   )}
                 </div>
@@ -267,9 +282,9 @@ const Installation = () => {
             <p className="text-slate-500 mb-6">
               Installation complete? Head over to your dashboard.
             </p>
-            <a 
-              href="https://my.newtonschool.co" 
-              target="_blank" 
+            <a
+              href="https://my.newtonschool.co"
+              target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 text-indigo-400 font-bold hover:text-indigo-300 transition-colors text-lg"
             >
@@ -293,7 +308,7 @@ const Footer = () => {
             </div>
             <span className="font-bold text-xl text-slate-900">Newton<span className="text-indigo-600">+</span></span>
           </div>
-          
+
           <div className="flex gap-8 text-sm font-medium text-slate-500">
             <a href="https://github.com/Jadu07" className="hover:text-indigo-600 transition-colors">GitHub</a>
             <a href="mailto:yashrajchouhan14@gmail.com" className="hover:text-indigo-600 transition-colors">Contact</a>

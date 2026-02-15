@@ -35,7 +35,7 @@ const installSteps = [
     title: "Download & Unzip",
     description: "Download the ZIP file and extract it to a folder. Don't skip the extraction step!",
     icon: <Download className="w-6 h-6 text-white" />,
-    action: "Download v3.0",
+    action: "Download v4.0",
     isDownload: true
   },
   {
@@ -60,7 +60,70 @@ const installSteps = [
   }
 ];
 
-const Navbar = () => {
+const DownloadModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity"
+        onClick={onClose}
+      ></div>
+
+      {/* Modal Content */}
+      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300 z-10">
+        <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50">
+          <div>
+            <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-500" />
+              Download Started!
+            </h3>
+            <p className="text-slate-500 text-sm mt-1">
+              Please watch this quick video to set up the extension correctly.
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400 hover:text-slate-600"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="p-0 bg-black">
+          <div className="aspect-video w-full">
+            <iframe
+              src="https://www.youtube.com/embed/w4aSCk2-TGM?autoplay=1&rel=0&modestbranding=1&mute=1"
+              title="Installation Tutorial"
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+
+        <div className="p-6 bg-slate-50 flex justify-end gap-3">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 text-slate-600 hover:text-slate-900 font-medium transition-colors"
+          >
+            Close
+          </button>
+          <a
+            href="#install"
+            onClick={onClose}
+            className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors shadow-lg shadow-indigo-200"
+          >
+            View Steps Below
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Navbar = ({ onDownload }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -77,7 +140,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">Features</a>
             <a href="#install" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">How to Install</a>
-            <a href="/newton_plus_ext_v3.0.zip" download="newton_plus_ext_v3.0.zip" className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
+            <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
               <Download className="w-4 h-4" />
               Get Extension
             </a>
@@ -95,8 +158,8 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t border-slate-100 p-4 space-y-4 shadow-xl">
           <a href="#features" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Features</a>
           <a href="#install" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>How to Install</a>
-          <a href="/newton_plus_ext_v3.0.zip" download="newton_plus_ext_v3.0.zip" className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
-            Download v3.0
+          <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
+            Download v4.0
           </a>
         </div>
       )}
@@ -104,7 +167,7 @@ const Navbar = () => {
   );
 };
 
-const Hero = () => {
+const Hero = ({ onDownload }) => {
   return (
     <div className="relative overflow-hidden pt-16 pb-24 lg:pt-32 bg-slate-50">
       {/* Background Decor */}
@@ -122,10 +185,10 @@ const Hero = () => {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
                 </span>
-                v3.0 Live
+                v4.0 Live
               </div>
               <span className="text-sm font-medium text-slate-500">
-                Last updated Dec 21, 2025
+                Last updated Feb 15, 2026
               </span>
             </div>
             <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 leading-[1.1]">
@@ -136,7 +199,7 @@ const Hero = () => {
               Stop guessing your percentage. Newton+ integrates seamlessly with your dashboard to give you real-time insights, locally and securely.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="/newton_plus_ext_v3.0.zip" download="newton_plus_ext_v3.0.zip" className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
+              <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
                 <Download className="w-5 h-5" />
                 Install Now
               </a>
@@ -182,11 +245,11 @@ const Hero = () => {
               <div className="absolute -bottom-8 -left-8 bg-white p-4 rounded-2xl shadow-xl border border-slate-100 animate-bounce delay-1000 hidden md:block">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
-                    <CheckCircle className="w-7 h-7 text-indigo-600" />
+                    <Download className="w-7 h-7 text-indigo-600" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Sync Status</p>
-                    <p className="text-base font-bold text-slate-900">100% Active</p>
+                    <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Total Downloads</p>
+                    <p className="text-base font-bold text-slate-900">250+</p>
                   </div>
                 </div>
               </div>
@@ -227,7 +290,7 @@ const Features = () => {
   );
 };
 
-const Installation = () => {
+const Installation = ({ onDownload }) => {
   return (
     <section id="install" className="py-24 bg-slate-900 text-white overflow-hidden relative">
       {/* Background patterns */}
@@ -261,7 +324,7 @@ const Installation = () => {
                   <p className="text-slate-400 mb-4">{step.description}</p>
 
                   {step.isDownload && (
-                    <a href="/newton_plus_ext_v3.0.zip" download="newton_plus_ext_v3.0.zip" className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
+                    <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
                       <Download className="w-4 h-4" />
                       {step.action}
                     </a>
@@ -423,13 +486,23 @@ const VideoSection = () => {
 };
 
 const App = () => {
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+
+  const handleDownload = () => {
+    setShowDownloadModal(true);
+  };
+
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
-      <Navbar />
-      <Hero />
+      <DownloadModal
+        isOpen={showDownloadModal}
+        onClose={() => setShowDownloadModal(false)}
+      />
+      <Navbar onDownload={handleDownload} />
+      <Hero onDownload={handleDownload} />
       <VideoSection />
       <Features />
-      <Installation />
+      <Installation onDownload={handleDownload} />
       <Footer />
     </div>
   );

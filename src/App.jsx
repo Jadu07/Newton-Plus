@@ -140,6 +140,7 @@ const Navbar = ({ onDownload }) => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#features" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">Features</a>
             <a href="#install" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">How to Install</a>
+            <a href="#support" className="text-slate-600 hover:text-indigo-600 transition-colors font-medium text-sm">Support</a>
             <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="bg-slate-900 text-white px-5 py-2 rounded-full font-medium hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl text-sm flex items-center gap-2">
               <Download className="w-4 h-4" />
               Get Extension
@@ -158,6 +159,7 @@ const Navbar = ({ onDownload }) => {
         <div className="md:hidden bg-white border-t border-slate-100 p-4 space-y-4 shadow-xl">
           <a href="#features" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Features</a>
           <a href="#install" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>How to Install</a>
+          <a href="#support" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Support</a>
           <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
             Download v4.0
           </a>
@@ -263,23 +265,24 @@ const Hero = ({ onDownload }) => {
 
 const Features = () => {
   return (
-    <section id="features" className="py-24 bg-white relative">
+    <section id="features" className="py-32 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">Built for the modern student.</h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+        <div className="text-center mb-24">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">Built for the <span className="text-indigo-600">modern student.</span></h2>
+          <p className="text-slate-600 text-xl max-w-2xl mx-auto">
             We stripped away the complexity. Newton+ gives you exactly what you need to track your progress, without the fluff.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, idx) => (
-            <div key={idx} className="group p-8 rounded-3xl bg-slate-50 hover:bg-white border border-transparent hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-100/50 transition-all duration-300">
-              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm border border-slate-100 group-hover:scale-110 transition-transform">
+            <div key={idx} className="group p-8 rounded-3xl bg-slate-50 hover:bg-white border border-transparent hover:border-indigo-100 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm border border-slate-100 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300 relative z-10">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-              <p className="text-slate-600 leading-relaxed">
+              <h3 className="text-xl font-bold text-slate-900 mb-4 relative z-10">{feature.title}</h3>
+              <p className="text-slate-600 leading-relaxed relative z-10">
                 {feature.description}
               </p>
             </div>
@@ -292,53 +295,48 @@ const Features = () => {
 
 const Installation = ({ onDownload }) => {
   return (
-    <section id="install" className="py-24 bg-slate-900 text-white overflow-hidden relative">
+    <section id="install" className="py-32 bg-slate-950 text-white overflow-hidden relative">
       {/* Background patterns */}
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-900/20 to-transparent"></div>
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-900/10 to-transparent pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-1/3 h-full bg-gradient-to-tr from-indigo-900/10 to-transparent pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-indigo-400 font-bold tracking-wider uppercase text-sm">Manual Installation</span>
-            <h2 className="text-4xl font-bold mt-3 mb-6">Setup in 30 Seconds</h2>
-            <p className="text-lg text-slate-400">
+          <div className="text-center mb-20">
+            <span className="text-indigo-400 font-bold tracking-wider uppercase text-xs border border-indigo-400/30 px-3 py-1 rounded-full bg-indigo-400/10">Manual Installation</span>
+            <h2 className="text-4xl md:text-5xl font-extrabold mt-6 mb-6">Setup in 30 Seconds</h2>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
               Because we value privacy and speed, Newton+ runs locally. Here is how to get it running.
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-800 before:to-transparent">
             {installSteps.map((step, idx) => (
-              <div key={idx} className="flex flex-col md:flex-row items-center md:items-start gap-6 bg-slate-800/50 border border-slate-700 p-6 rounded-2xl hover:bg-slate-800 transition-colors">
+              <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
 
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-900/50">
-                    <span className="font-bold text-lg">{idx + 1}</span>
-                  </div>
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-slate-900 bg-slate-800 group-hover:bg-indigo-600 group-hover:scale-110 transition-all shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-xl z-10">
+                  <span className="text-xs font-bold text-white">{idx + 1}</span>
                 </div>
 
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-xl font-bold mb-2 flex items-center justify-center md:justify-start gap-3">
-                    {step.title}
-                    {step.icon}
-                  </h3>
-                  <p className="text-slate-400 mb-4">{step.description}</p>
+                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl hover:bg-slate-800 hover:border-indigo-500/30 transition-all duration-300 shadow-lg">
+                  <div className="flex items-center gap-4 mb-3">
+                    <div className="p-2 bg-slate-800 rounded-lg text-indigo-400 group-hover:text-white group-hover:bg-indigo-600 transition-colors">
+                      {step.icon}
+                    </div>
+                    <h3 className="text-xl font-bold">{step.title}</h3>
+                  </div>
+                  <p className="text-slate-400 leading-relaxed text-sm mb-4">{step.description}</p>
 
                   {step.isDownload && (
-                    <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors">
+                    <a href="/newton_plus_ext_v4.0.zip" download="newton_plus_ext_v4.0.zip" onClick={onDownload} className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors shadow-lg shadow-white/10">
                       <Download className="w-4 h-4" />
                       {step.action}
                     </a>
                   )}
 
                   {step.alert && (
-                    <div className="inline-block bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-1 text-amber-500 text-xs font-bold uppercase tracking-wide">
+                    <div className="inline-block bg-amber-500/10 border border-amber-500/20 rounded-md px-2.5 py-1 text-amber-500 text-xs font-bold uppercase tracking-wide">
                       {step.alert}
-                    </div>
-                  )}
-
-                  {step.image && (
-                    <div className="mt-4 rounded-lg overflow-hidden border border-slate-700 shadow-lg">
-                      <img src={step.image} alt={step.title} className="w-full h-32 object-cover object-left-top" />
                     </div>
                   )}
                 </div>
@@ -346,15 +344,15 @@ const Installation = ({ onDownload }) => {
             ))}
           </div>
 
-          <div className="mt-16 text-center">
-            <p className="text-slate-500 mb-6">
+          <div className="mt-20 text-center">
+            <p className="text-slate-500 mb-6 font-medium">
               Installation complete? Head over to your dashboard.
             </p>
             <a
               href="https://my.newtonschool.co"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 text-indigo-400 font-bold hover:text-indigo-300 transition-colors text-lg"
+              className="inline-flex items-center gap-2 text-white font-bold bg-indigo-600 px-8 py-4 rounded-xl hover:bg-indigo-700 hover:scale-105 transition-all shadow-lg shadow-indigo-600/25"
             >
               Launch Newton School <ChevronRight className="w-5 h-5" />
             </a>
@@ -433,23 +431,53 @@ const VideoTutorial = ({ videoId }) => {
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t border-slate-100 py-12">
+    <footer className="bg-slate-950 text-slate-300 py-16 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-              <Activity className="w-5 h-5 text-white" />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          <div className="col-span-1 md:col-span-2">
+            <div className="flex items-center gap-2.5 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <Activity className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-bold text-2xl text-white tracking-tight">Newton<span className="text-indigo-500">+</span></span>
             </div>
-            <span className="font-bold text-xl text-slate-900">Newton<span className="text-indigo-600">+</span></span>
+            <p className="text-slate-400 text-sm leading-relaxed max-w-sm mb-6">
+              Simplifying attendance with real-time tracking since. Crafted with ❤️ for the Newton School Students.
+            </p>
+            <div className="flex gap-4">
+              <a href="#" className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center hover:bg-slate-800 hover:text-indigo-400 transition-all border border-slate-800 hover:border-indigo-500/30">
+                <Chrome className="w-5 h-5" />
+              </a>
+              {/* Add more social icons here if needed */}
+            </div>
           </div>
 
-          <div className="flex gap-8 text-sm font-medium text-slate-500">
-            <a href="https://github.com/Jadu07" className="hover:text-indigo-600 transition-colors">GitHub</a>
-            <a href="mailto:yashrajchouhan14@gmail.com" className="hover:text-indigo-600 transition-colors">Contact</a>
+          <div>
+            <h4 className="text-white font-bold mb-6">Product</h4>
+            <ul className="space-y-3 text-sm">
+              <li><a href="#features" className="hover:text-indigo-400 transition-colors">Features</a></li>
+              <li><a href="#install" className="hover:text-indigo-400 transition-colors">Installation</a></li>
+              <li><a href="#" className="hover:text-indigo-400 transition-colors">Changelog</a></li>
+            </ul>
           </div>
 
-          <div className="text-slate-400 text-sm">
-            © {new Date().getFullYear()} Newton+ Project.
+          <div>
+            <h4 className="text-white font-bold mb-6">Support</h4>
+            <ul className="space-y-3 text-sm">
+              <li><a href="#support" className="hover:text-indigo-400 transition-colors">Help Center</a></li>
+              <li><a href="mailto:support@example.com" className="hover:text-indigo-400 transition-colors">Contact Us</a></li>
+              <li><a href="#" className="hover:text-indigo-400 transition-colors">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-slate-500">
+            © {new Date().getFullYear()} Newton+ Project. All rights reserved.
+          </p>
+          <div className="flex gap-2">
+            <div className="w-2 h-2 rounded-full bg-green-500 mt-1"></div>
+            <span className="text-xs text-slate-400">All Systems Operational</span>
           </div>
         </div>
       </div>
@@ -485,6 +513,131 @@ const VideoSection = () => {
   );
 };
 
+const Support = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState(null); // 'loading', 'success', 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    try {
+      const response = await fetch('https://newtonplusdata.vercel.app/api/feedbacks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, feedback: message }),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setEmail('');
+        setMessage('');
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error('Error sending feedback:', error);
+      setStatus('error');
+    }
+  };
+
+  return (
+    <section id="support" className="py-32 bg-slate-50 relative overflow-hidden">
+      {/* Decor blobs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-100/50 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-fuchsia-100/50 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-2xl mx-auto text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-4">
+            <Activity className="w-3 h-3" />
+            Support
+          </div>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">We're here to help.</h2>
+          <p className="text-slate-600 text-lg">
+            Have questions, feedback, or found a bug? We'd love to hear from you.
+          </p>
+        </div>
+
+        <div className="max-w-xl mx-auto bg-white rounded-3xl p-8 md:p-10 border border-slate-100 shadow-2xl shadow-slate-200/50">
+          {status === 'success' ? (
+            <div className="text-center py-12 animate-in fade-in zoom-in duration-300">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-10 h-10 text-green-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Message Sent!</h3>
+              <p className="text-slate-600 mb-8">Thanks for reaching out. We'll get back to you shortly.</p>
+              <button
+                onClick={() => setStatus(null)}
+                className="text-indigo-600 font-bold hover:text-indigo-700 flex items-center justify-center gap-2 mx-auto"
+              >
+                Send another message <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2 ml-1">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-5 py-4 rounded-xl bg-slate-50 border-2 border-slate-100 focus:border-indigo-500 focus:bg-white focus:ring-0 outline-none transition-all font-medium placeholder:text-slate-400"
+                  placeholder="you@example.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-bold text-slate-700 mb-2 ml-1">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  required
+                  rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full px-5 py-4 rounded-xl bg-slate-50 border-2 border-slate-100 focus:border-indigo-500 focus:bg-white focus:ring-0 outline-none transition-all resize-none font-medium placeholder:text-slate-400"
+                  placeholder="How can we help?"
+                ></textarea>
+              </div>
+
+              {status === 'error' && (
+                <div className="p-4 bg-red-50 text-red-600 text-sm font-medium rounded-xl border border-red-100 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                  Failed to send message. Please try again.
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold py-4 rounded-xl hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4"
+              >
+                {status === 'loading' ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    Sending...
+                  </>
+                ) : (
+                  'Send Message'
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const App = () => {
   const [showDownloadModal, setShowDownloadModal] = useState(false);
 
@@ -503,6 +656,7 @@ const App = () => {
       <VideoSection />
       <Features />
       <Installation onDownload={handleDownload} />
+      <Support />
       <Footer />
     </div>
   );

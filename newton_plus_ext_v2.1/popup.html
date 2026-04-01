@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="notification-bar" style="display: none;"></div>
+  <div id="user-info"></div>
+  <h1>NST Attendance</h1>
+  <div class="tab-container">
+    <button class="tab-button active" id="attendance-tab">Attendance</button>
+    <button class="tab-button" id="settings-tab">Settings</button>
+  </div>
+  <div id="attendance-view" class="view active">
+    <div id="premium-indicator" style="display: none;"></div>
+    <div id="attendance"></div>
+  </div>
+  <div id="settings-view" class="view">
+    <div id="settings"></div>
+    <p style="text-align: center;"><a href="mailto:wildhub.com@gmail.com">Have questions? Reach out to Support.</a></p>
+    <p class="credit"></p>
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Download, CheckCircle, Settings, Menu, X, ChevronRight, Chrome, FolderOpen, Puzzle, Activity, Zap, TrendingUp } from 'lucide-react';
 
 // --- Assets & Data ---
@@ -200,7 +200,7 @@ const UpdateTicker = () => {
   );
 };
 
-const Hero = ({ onDownload }) => {
+const Hero = ({ onDownload, downloadCount }) => {
   return (
     <div className="relative overflow-hidden pt-16 pb-24 lg:pt-32 bg-aurora">
       {/* Background Decor */}
@@ -282,7 +282,7 @@ const Hero = ({ onDownload }) => {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Total Downloads</p>
-                    <p className="text-base font-bold text-slate-900">250+</p>
+                    <p className="text-base font-bold text-slate-900">{downloadCount}</p>
                   </div>
                 </div>
               </div>
@@ -723,9 +723,36 @@ const Showcase = () => {
 
 const App = () => {
   const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [downloadCount, setDownloadCount] = useState(250);
 
-  const handleDownload = () => {
+  useEffect(() => {
+    const fetchDownloads = async () => {
+      try {
+        const response = await fetch('/api/downloads');
+        const data = await response.json();
+        if (data.count) {
+          setDownloadCount(data.count);
+        }
+      } catch (err) {
+        console.error('Failed to fetch download count:', err);
+      }
+    };
+    fetchDownloads();
+  }, []);
+
+  const handleDownload = async () => {
     setShowDownloadModal(true);
+    try {
+      const response = await fetch('/api/downloads', {
+        method: 'POST'
+      });
+      const data = await response.json();
+      if (data.count) {
+        setDownloadCount(data.count);
+      }
+    } catch (err) {
+      console.error('Failed to increment download count:', err);
+    }
   };
 
   return (
@@ -736,7 +763,7 @@ const App = () => {
       />
       <Navbar onDownload={handleDownload} />
       <UpdateTicker />
-      <Hero onDownload={handleDownload} />
+      <Hero onDownload={handleDownload} downloadCount={downloadCount} />
       <Showcase />
       <VideoSection />
       <Features />

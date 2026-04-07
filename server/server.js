@@ -56,7 +56,7 @@ initDB();
 app.get('/api/downloads', async (req, res) => {
   try {
     const result = await pool.query(`SELECT count FROM ${TABLE} WHERE metric_name = $1`, ['extension_downloads']);
-    const count = result.rows[0]?.count || 250;
+    const count = result.rows[0]?.count || "Loading..";
     res.json({ count });
   } catch (err) {
     console.error('GET Error:', err.message);

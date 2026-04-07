@@ -548,9 +548,45 @@ const Support = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState(null); // 'loading', 'success', 'error'
+  const [emailError, setEmailError] = useState('');
+  const [rateLimitError, setRateLimitError] = useState('');
+
+  const MAX_FEEDBACKS = 2;
+  const COOLDOWN_MS = 2 * 60 * 60 * 1000; // 2 hours
+
+  const validateEmail = (email) => {
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(String(email).toLowerCase());
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setEmailError('');
+    setRateLimitError('');
+
+    // Check rate limiting
+    const rateLimitData = JSON.parse(localStorage.getItem('feedback_rate_limit') || '{"count": 0, "firstSent": 0}');
+    const now = Date.now();
+
+    if (rateLimitData.count >= MAX_FEEDBACKS && now - rateLimitData.firstSent < COOLDOWN_MS) {
+      const remainingMs = COOLDOWN_MS - (now - rateLimitData.firstSent);
+      const remainingMinutes = Math.ceil(remainingMs / (60 * 1000));
+      const hours = Math.floor(remainingMinutes / 60);
+      const minutes = remainingMinutes % 60;
+      
+      let timeStr = "";
+      if (hours > 0) timeStr += `${hours} hour${hours > 1 ? 's' : ''} `;
+      if (minutes > 0) timeStr += `${minutes} minute${minutes > 1 ? 's' : ''}`;
+      
+      setRateLimitError(`Please try again in ${timeStr.trim()}.`);
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setEmailError('Please enter a valid email address.');
+      return;
+    }
+
     setStatus('loading');
 
     try {
@@ -563,6 +599,17 @@ const Support = () => {
       });
 
       if (response.ok) {
+        // Update rate limiting data
+        let rateLimitData = JSON.parse(localStorage.getItem('feedback_rate_limit') || '{"count": 0, "firstSent": 0}');
+        const now = Date.now();
+
+        if (now - rateLimitData.firstSent > COOLDOWN_MS) {
+          rateLimitData = { count: 1, firstSent: now };
+        } else {
+          rateLimitData.count += 1;
+        }
+        localStorage.setItem('feedback_rate_limit', JSON.stringify(rateLimitData));
+
         setStatus('success');
         setEmail('');
         setMessage('');
@@ -619,10 +666,20 @@ const Support = () => {
                   id="email"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-5 py-4 rounded-xl bg-slate-50 border-2 border-slate-100 focus:border-indigo-500 focus:bg-white focus:ring-0 outline-none transition-all font-medium placeholder:text-slate-400"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (emailError) setEmailError('');
+                  }}
+                  className={`w-full px-5 py-4 rounded-xl bg-slate-50 border-2 focus:bg-white focus:ring-0 outline-none transition-all font-medium placeholder:text-slate-400 ${
+                    emailError ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-indigo-500'
+                  }`}
                   placeholder="you@example.com"
                 />
+                {emailError && (
+                  <p className="mt-2 text-sm text-red-600 font-medium animate-in fade-in slide-in-from-top-1 duration-200">
+                    {emailError}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -644,6 +701,13 @@ const Support = () => {
                 <div className="p-4 bg-red-50 text-red-600 text-sm font-medium rounded-xl border border-red-100 flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500"></div>
                   Failed to send message. Please try again.
+                </div>
+              )}
+
+              {rateLimitError && (
+                <div className="p-4 bg-amber-50 text-amber-600 text-sm font-medium rounded-xl border border-amber-100 flex items-center gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                  <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
+                  {rateLimitError}
                 </div>
               )}
 

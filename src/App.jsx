@@ -152,7 +152,7 @@ const Navbar = ({ onDownload }) => {
             <a href="#features" className="text-slate-600 hover:text-indigo-700 transition-colors font-medium text-sm">Features</a>
             <a href="#install" className="text-slate-600 hover:text-indigo-700 transition-colors font-medium text-sm">How to Install</a>
             <a href="#support" className="text-slate-600 hover:text-indigo-700 transition-colors font-medium text-sm">Support</a>
-            <a href="/newton_plus_ext_v5.2.zip" download="newton_plus_ext_v5.2.zip" onClick={onDownload} className="bg-indigo-600 text-white px-5 py-2 rounded-full font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 hover:shadow-xl text-sm flex items-center gap-2">
+            <a href="/newton_plus_ext_v5.2.1.zip" download="newton_plus_ext_v5.2.1.zip" onClick={onDownload} className="bg-indigo-600 text-white px-5 py-2 rounded-full font-medium hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 hover:shadow-xl text-sm flex items-center gap-2">
               <Download className="w-4 h-4" />
               Get Extension
             </a>
@@ -171,7 +171,7 @@ const Navbar = ({ onDownload }) => {
           <a href="#features" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Features</a>
           <a href="#install" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>How to Install</a>
           <a href="#support" className="block text-slate-600 font-medium" onClick={() => setIsOpen(false)}>Support</a>
-          <a href="/newton_plus_ext_v5.2.zip" download="newton_plus_ext_v5.2.zip" onClick={onDownload} className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
+          <a href="/newton_plus_ext_v5.2.1.zip" download="newton_plus_ext_v5.2.1.zip" onClick={onDownload} className="w-full bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium shadow-lg shadow-indigo-200">
             Download v5.2
           </a>
         </div>
@@ -232,7 +232,7 @@ const Hero = ({ onDownload, downloadCount }) => {
               Stop guessing your percentage. Newton+ integrates seamlessly with your dashboard to give you real-time insights, locally and securely.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a href="/newton_plus_ext_v5.2.zip" download="newton_plus_ext_v5.2.zip" onClick={onDownload} className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-500 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
+              <a href="/newton_plus_ext_v5.2.1.zip" download="newton_plus_ext_v5.2.1.zip" onClick={onDownload} className="flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-500 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all duration-200">
                 <Download className="w-5 h-5" />
                 Install Now
               </a>
@@ -359,7 +359,7 @@ const Installation = ({ onDownload }) => {
                   <p className="text-slate-400 leading-relaxed text-sm mb-4">{step.description}</p>
 
                   {step.isDownload && (
-                    <a href="/newton_plus_ext_v5.2.zip" download="newton_plus_ext_v5.2.zip" onClick={onDownload} className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors shadow-lg shadow-white/10">
+                    <a href="/newton_plus_ext_v5.2.1.zip" download="newton_plus_ext_v5.2.1.zip" onClick={onDownload} className="inline-flex items-center gap-2 bg-white text-slate-900 px-6 py-2.5 rounded-lg font-bold hover:bg-indigo-50 transition-colors shadow-lg shadow-white/10">
                       <Download className="w-4 h-4" />
                       {step.action}
                     </a>
@@ -573,11 +573,11 @@ const Support = () => {
       const remainingMinutes = Math.ceil(remainingMs / (60 * 1000));
       const hours = Math.floor(remainingMinutes / 60);
       const minutes = remainingMinutes % 60;
-      
+
       let timeStr = "";
       if (hours > 0) timeStr += `${hours} hour${hours > 1 ? 's' : ''} `;
       if (minutes > 0) timeStr += `${minutes} minute${minutes > 1 ? 's' : ''}`;
-      
+
       setRateLimitError(`Please try again in ${timeStr.trim()}.`);
       return;
     }
@@ -670,9 +670,8 @@ const Support = () => {
                     setEmail(e.target.value);
                     if (emailError) setEmailError('');
                   }}
-                  className={`w-full px-5 py-4 rounded-xl bg-slate-50 border-2 focus:bg-white focus:ring-0 outline-none transition-all font-medium placeholder:text-slate-400 ${
-                    emailError ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-indigo-500'
-                  }`}
+                  className={`w-full px-5 py-4 rounded-xl bg-slate-50 border-2 focus:bg-white focus:ring-0 outline-none transition-all font-medium placeholder:text-slate-400 ${emailError ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-indigo-500'
+                    }`}
                   placeholder="you@example.com"
                 />
                 {emailError && (

@@ -146,8 +146,8 @@ const Navbar = ({ onDownload }) => {
     <nav className="bg-black sticky top-0 z-50" style={{ height: '44px' }}>
       <div className="max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-12 h-full">
         <div className="flex justify-between items-center h-full">
-          <a href="#" className="flex items-center gap-1.5">
-            <span className="text-white font-semibold text-sm" style={{ letterSpacing: '-0.4px' }}>Newton<span className="text-[#2997ff]">+</span></span>
+          <a href="#" className="flex items-center">
+            <img src="/logo.png" alt="Newton+" className="h-10" style={{ filter: 'invert(1)' }} />
           </a>
 
           <div className="hidden md:flex items-center gap-6">
@@ -724,12 +724,12 @@ const Support = () => {
 const Footer = () => {
   return (
     <footer className="bg-[#f5f5f7] border-t border-[#e0e0e0] pt-10 pb-8">
-      <div className="max-w-[980px] mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-1.5 mb-3">
-              <span className="text-[17px] font-semibold text-[#1d1d1f]" style={{ letterSpacing: '-0.374px' }}>Newton<span className="text-[#0066cc]">+</span></span>
+            <div className="flex items-center mb-3">
+              <img src="/logo.png" alt="Newton+" className="h-11" />
             </div>
             <p className="text-[14px] text-[#333] leading-[1.6] max-w-[320px]" style={{ letterSpacing: '-0.224px' }}>
               Simplifying attendance with real-time tracking. Crafted with care for Newton School students.

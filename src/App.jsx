@@ -5,6 +5,13 @@ import { Download, CheckCircle, Settings, Menu, X, ChevronRight, Chrome, FolderO
 
 const SCREENSHOT_URL = "/screenshot.png";
 
+const formatCount = (num) => {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(2).replace(/\.?0+$/, '') + 'K';
+  }
+  return num.toString();
+};
+
 const features = [
   {
     title: "Fresh New UI",
@@ -288,7 +295,7 @@ const Hero = ({ onDownload, downloadCount }) => {
               </div>
               <div>
                 <p className="text-[11px] text-[#7a7a7a]" style={{ letterSpacing: '0' }}>Total Downloads</p>
-                <p className="text-[17px] font-semibold text-[#1d1d1f]" style={{ letterSpacing: '-0.374px' }}>{downloadCount}</p>
+                <p className="text-[17px] font-semibold text-[#1d1d1f]" style={{ letterSpacing: '-0.374px' }}>{formatCount(downloadCount)}</p>
               </div>
             </div>
           </div>
@@ -766,7 +773,7 @@ const Footer = () => {
 
 const App = () => {
   const [showDownloadModal, setShowDownloadModal] = useState(false);
-  const [downloadCount, setDownloadCount] = useState(250);
+  const [downloadCount, setDownloadCount] = useState(1230);
 
   useEffect(() => {
     const fetchDownloads = async () => {

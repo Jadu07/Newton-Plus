@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.47;
   font-weight: 400;
   color-scheme: light;
   font-synthesis: none;
@@ -18,36 +18,65 @@
 body {
   margin: 0;
   min-height: 100vh;
-  @apply bg-slate-50 text-slate-900;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-slate-100;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full border-2 border-slate-100 hover:bg-slate-400 transition-colors;
+  background-color: #ffffff;
+  color: #1d1d1f;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-.ticker-scroll {
-  animation: ticker-scroll 30s linear infinite;
+/* Subtle scrollbar — not a design statement */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f5f7;
+}
+::-webkit-scrollbar-thumb {
+  background: #d2d2d7;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aeaeb2;
 }
 
-@keyframes ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
+/* Selection */
+::selection {
+  background-color: rgba(0, 102, 204, 0.12);
+  color: #1d1d1f;
+}
 
-  100% {
-    transform: translateX(-50%);
-  }
+/* Ticker animation */
+.ticker-scroll {
+  animation: ticker-scroll 40s linear infinite;
+}
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Floating badge animation — very subtle */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float-gentle {
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+/* Focus ring — single blue */
+*:focus-visible {
+  outline: 2px solid #0071e3;
+  outline-offset: 2px;
+}
+
+/* Button press — system-wide micro-interaction */
+.btn-press:active {
+  transform: scale(0.97);
+}
+
+/* Product shadow — the ONLY shadow in the system */
+.product-shadow {
+  box-shadow: rgba(0, 0, 0, 0.22) 3px 5px 30px 0px;
 }

@@ -110,7 +110,7 @@ export default function Demo() {
             </figure>
             <figure className="w-44 flex-shrink-0 flex flex-col">
               <div className="flex-1 rounded-xl border border-gray-200 overflow-hidden">
-                <img src="/demo/loginVerification.jpeg" alt="Verification email" className="w-full h-full object-cover object-top" />
+                <img src="/demo/loginVerificationMobile.png" alt="Verification email" className="w-full h-full object-cover object-top" />
               </div>
               <figcaption className="text-xs text-gray-400 mt-2">Verification email</figcaption>
             </figure>

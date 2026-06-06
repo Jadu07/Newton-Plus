@@ -35,12 +35,12 @@ export default function Demo() {
               A minimal website guiding students through downloading and installing Newton+ on Chrome or Brave. Includes an embedded tutorial video and a live download counter.
             </p>
             <a
-              href="https://newtonplus.vercel.app"
+              href="https://newton-brown.vercel.app"
               target="_blank"
               rel="noreferrer"
               className="text-sm font-medium text-blue-600 hover:underline"
             >
-              ↗ newtonplus.vercel.app
+              ↗ newton-brown.vercel.app
             </a>
           </div>
 

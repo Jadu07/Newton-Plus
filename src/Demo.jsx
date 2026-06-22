@@ -13,10 +13,15 @@ export default function Demo() {
         {/* ── Overview ── */}
         <section className="pb-2">
           <p className="text-xs font-semibold tracking-widest uppercase text-blue-600 mb-3">Platform Overview</p>
-          <h1 className="text-3xl font-bold text-gray-900 mb-3 leading-tight">Newton+</h1>
-          <p className="text-base text-gray-500 leading-relaxed max-w-2xl">
-            A three-part platform used by <span className="font-semibold text-gray-800">640+ students</span> — covering seamless installation, real-time usage tracking, analytics, and admin management.
-          </p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">Newton+</h1>
+          <div className="text-base text-gray-500 leading-relaxed max-w-3xl space-y-4">
+            <p>
+              In my college, students could view their attendance records on the portal but had to manually calculate their attendance percentage and determine how many classes they could safely miss. To solve this, I built <span className="font-semibold text-gray-800">Newton Plus</span>, a platform that automatically syncs attendance data and provides real-time attendance insights, including percentage tracking and safe-to-skip calculations.
+            </p>
+            <p>
+              The platform is currently used by <span className="font-semibold text-gray-800">640+ students</span> and has recorded over <span className="font-semibold text-gray-800">75,000 extension opens</span>.
+            </p>
+          </div>
           <div className="flex flex-wrap gap-2 mt-5">
             {['Installation Website', 'Chrome Extension', 'CRM Dashboard'].map(label => (
               <span key={label} className="text-xs font-medium border border-gray-200 rounded-full px-4 py-1.5 text-gray-500">
@@ -24,6 +29,24 @@ export default function Demo() {
               </span>
             ))}
           </div>
+
+          {/* Main Video Demonstration */}
+          <figure className="mt-12 group">
+            <div className="rounded-2xl border border-gray-200/80 bg-black shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] overflow-hidden transition-transform duration-500 hover:scale-[1.01] hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
+              <video
+                className="w-full h-auto block"
+                controls
+                autoPlay
+                muted
+                loop
+                playsInline
+              >
+                <source src="/demo/EXTENSIUON.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <figcaption className="text-center text-sm text-gray-500 mt-6 font-medium">Live demonstration of the Newton+ Extension</figcaption>
+          </figure>
         </section>
 
         {/* ── Installation Website ── */}
@@ -157,7 +180,7 @@ export default function Demo() {
 
         {/* Footer */}
         <p className="text-center text-xs text-gray-400 pt-4">
-          Newton+ · Internal demo · Screenshots from live production
+          Newton+ · Extension demo · Screenshots from live production
         </p>
 
       </div>

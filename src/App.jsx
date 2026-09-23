@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, CheckCircle, Settings, Menu, X, ChevronRight, Chrome, FolderOpen, Puzzle, Activity, Zap, TrendingUp } from 'lucide-react';
+import { Download, CheckCircle, Settings, Menu, X, ChevronRight, Chrome, FolderOpen, Puzzle, Activity, Zap, TrendingUp, Paperclip } from 'lucide-react';
 
 // --- Assets & Data ---
 
@@ -146,14 +146,14 @@ const Navbar = ({ onDownload }) => {
     <nav className="bg-black sticky top-0 z-50" style={{ height: '44px' }}>
       <div className="max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-12 h-full">
         <div className="flex justify-between items-center h-full">
-          <a href="#" className="flex items-center">
+          <a href="/" className="flex items-center">
             <img src="/logo.png" alt="Newton+" className="h-10" style={{ filter: 'invert(1)' }} />
           </a>
 
           <div className="hidden md:flex items-center gap-6">
-            <a href="#features" className="text-[12px] text-white/80 hover:text-white transition-colors" style={{ letterSpacing: '-0.12px' }}>Features</a>
-            <a href="#install" className="text-[12px] text-white/80 hover:text-white transition-colors" style={{ letterSpacing: '-0.12px' }}>How to Install</a>
-            <a href="#support" className="text-[12px] text-white/80 hover:text-white transition-colors" style={{ letterSpacing: '-0.12px' }}>Support</a>
+            <a href="/#features" className="text-[12px] text-white/80 hover:text-white transition-colors" style={{ letterSpacing: '-0.12px' }}>Features</a>
+            <a href="/#install" className="text-[12px] text-white/80 hover:text-white transition-colors" style={{ letterSpacing: '-0.12px' }}>How to Install</a>
+            <a href="/#support" className="text-[12px] text-white/80 hover:text-white transition-colors" style={{ letterSpacing: '-0.12px' }}>Support</a>
             <a
               href="/newton_plus_ext_v5.2.1.zip"
               download="newton_plus_ext_v5.2.1.zip"
@@ -175,9 +175,9 @@ const Navbar = ({ onDownload }) => {
 
       {isOpen && (
         <div className="md:hidden bg-black border-t border-white/10 px-4 py-5 space-y-4">
-          <a href="#features" className="block text-[14px] text-white/80 hover:text-white py-1" onClick={() => setIsOpen(false)}>Features</a>
-          <a href="#install" className="block text-[14px] text-white/80 hover:text-white py-1" onClick={() => setIsOpen(false)}>How to Install</a>
-          <a href="#support" className="block text-[14px] text-white/80 hover:text-white py-1" onClick={() => setIsOpen(false)}>Support</a>
+          <a href="/#features" className="block text-[14px] text-white/80 hover:text-white py-1" onClick={() => setIsOpen(false)}>Features</a>
+          <a href="/#install" className="block text-[14px] text-white/80 hover:text-white py-1" onClick={() => setIsOpen(false)}>How to Install</a>
+          <a href="/#support" className="block text-[14px] text-white/80 hover:text-white py-1" onClick={() => setIsOpen(false)}>Support</a>
           <a
             href="/newton_plus_ext_v5.2.1.zip"
             download="newton_plus_ext_v5.2.1.zip"
@@ -542,9 +542,12 @@ const Installation = ({ onDownload }) => {
 const Support = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [screenshots, setScreenshots] = useState([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [status, setStatus] = useState(null);
   const [emailError, setEmailError] = useState('');
   const [rateLimitError, setRateLimitError] = useState('');
+  const [uploadError, setUploadError] = useState('');
 
   const MAX_FEEDBACKS = 2;
   const COOLDOWN_MS = 2 * 60 * 60 * 1000;
@@ -552,6 +555,60 @@ const Support = () => {
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return re.test(String(email).toLowerCase());
+  };
+
+  const handleScreenshot = (files) => {
+    setUploadError('');
+
+    const validFiles = Array.from(files || []).filter((file) => file.type.startsWith('image/') && file.size <= 10 * 1024 * 1024);
+    if (validFiles.length !== Array.from(files || []).length) {
+      setUploadError('Only image files up to 10 MB each can be attached.');
+    }
+    if (!validFiles.length) return;
+
+    setScreenshots((currentFiles) => [...currentFiles, ...validFiles]);
+    setUploadProgress(0);
+  };
+
+  const uploadScreenshot = async () => {
+    if (!screenshots.length) return [];
+
+    const uploadedUrls = [];
+    for (const [index, screenshot] of screenshots.entries()) {
+      const formData = new FormData();
+      formData.append('file', screenshot);
+
+      const screenshotUrl = await new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.open('POST', '/api/upload');
+
+        request.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const fileProgress = (event.loaded / event.total) * 100;
+            setUploadProgress(Math.round(((index * 100) + fileProgress) / screenshots.length));
+          }
+        };
+
+        request.onload = () => {
+          if (request.status < 200 || request.status >= 300) {
+            reject(new Error('Screenshot upload failed'));
+            return;
+          }
+          const url = JSON.parse(request.responseText).url;
+          if (!url?.startsWith('http')) {
+            reject(new Error('Screenshot upload failed'));
+            return;
+          }
+          resolve(url);
+        };
+
+        request.onerror = () => reject(new Error('Screenshot upload failed'));
+        request.send(formData);
+      });
+      uploadedUrls.push(screenshotUrl);
+    }
+    setUploadProgress(100);
+    return uploadedUrls;
   };
 
   const handleSubmit = async (e) => {
@@ -584,10 +641,14 @@ const Support = () => {
     setStatus('loading');
 
     try {
+      const screenshotUrls = await uploadScreenshot();
       const response = await fetch('https://newtonplusdata.vercel.app/api/feedbacks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, feedback: message }),
+        body: JSON.stringify({
+          email,
+          feedback: screenshotUrls.length ? `${message}\n\nScreenshots:\n${screenshotUrls.join('\n')}` : message,
+        }),
       });
 
       if (response.ok) {
@@ -604,11 +665,14 @@ const Support = () => {
         setStatus('success');
         setEmail('');
         setMessage('');
+        setScreenshots([]);
+        setUploadProgress(0);
       } else {
         setStatus('error');
       }
     } catch (error) {
       console.error('Error sending feedback:', error);
+      setUploadError(screenshots.length ? 'We could not upload the images. Please try again or remove them and send the message without attachments.' : '');
       setStatus('error');
     }
   };
@@ -645,7 +709,7 @@ const Support = () => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="support-form space-y-5">
               <div>
                 <label htmlFor="email" className="block text-[14px] font-semibold text-[#1d1d1f] mb-2" style={{ letterSpacing: '-0.224px' }}>
                   Email Address
@@ -659,7 +723,7 @@ const Support = () => {
                     setEmail(e.target.value);
                     if (emailError) setEmailError('');
                   }}
-                  className={`w-full px-4 py-3 rounded-xl bg-[#f5f5f7] text-[17px] text-[#1d1d1f] border focus:bg-white focus:ring-0 outline-none transition-all placeholder:text-[#7a7a7a] ${emailError ? 'border-[#ff3b30]' : 'border-[#e0e0e0] focus:border-[#0066cc]'}`}
+                  className={`w-full px-4 py-3 rounded-xl bg-[#f5f5f7] text-[17px] text-[#1d1d1f] border focus:bg-white focus:ring-0 focus:border-[#e0e0e0] outline-none placeholder:text-[#7a7a7a] ${emailError ? 'border-[#ff3b30]' : 'border-[#e0e0e0]'}`}
                   style={{ letterSpacing: '-0.374px' }}
                   placeholder="you@example.com"
                 />
@@ -672,24 +736,52 @@ const Support = () => {
                 <label htmlFor="message" className="block text-[14px] font-semibold text-[#1d1d1f] mb-2" style={{ letterSpacing: '-0.224px' }}>
                   Message
                 </label>
-                <textarea
-                  id="message"
-                  required
-                  rows={4}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-[#f5f5f7] text-[17px] text-[#1d1d1f] border border-[#e0e0e0] focus:border-[#0066cc] focus:bg-white focus:ring-0 outline-none transition-all resize-none placeholder:text-[#7a7a7a]"
-                  style={{ letterSpacing: '-0.374px' }}
-                  placeholder="How can we help?"
-                ></textarea>
-              </div>
-
-              {status === 'error' && (
-                <div className="p-3 bg-[#ff3b30]/5 text-[#ff3b30] text-[12px] font-medium rounded-lg border border-[#ff3b30]/10 flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#ff3b30]"></div>
-                  Failed to send message. Please try again.
+                <div className="overflow-hidden rounded-xl border border-[#e0e0e0] bg-[#f5f5f7] focus-within:bg-white">
+                  <textarea
+                    id="message"
+                    required
+                    rows={4}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="w-full px-4 py-3 bg-transparent text-[17px] text-[#1d1d1f] focus:ring-0 outline-none resize-none placeholder:text-[#7a7a7a]"
+                    style={{ letterSpacing: '-0.374px' }}
+                    placeholder="How can we help?"
+                  ></textarea>
+                  <div className="flex items-center gap-2 px-3 py-2 border-t border-[#e0e0e0]">
+                    <label htmlFor="screenshot" className="inline-flex items-center gap-1.5 text-[12px] text-[#7a7a7a] hover:text-[#0066cc] cursor-pointer transition-colors" title="Attach screenshots">
+                      <Paperclip className="w-4 h-4" />
+                      {screenshots.length === 0 && <span>Add Attachment</span>}
+                      <input
+                        id="screenshot"
+                        type="file"
+                        multiple
+                        accept="image/png,image/jpeg,image/webp,image/gif"
+                        className="sr-only"
+                        onChange={(e) => {
+                          handleScreenshot(e.target.files);
+                          e.target.value = '';
+                        }}
+                      />
+                    </label>
+                    {screenshots.length > 0 && (
+                      <span className="min-w-0 flex-1 truncate text-[12px] text-[#555]" title={screenshots.map((file) => file.name).join(', ')}>
+                        {screenshots.length === 1 ? screenshots[0].name : `${screenshots.length} images attached`}
+                      </span>
+                    )}
+                    {status === 'loading' && screenshots.length > 0 && (
+                      <div className="w-24 h-1 overflow-hidden rounded-full bg-[#dfe7ef]">
+                        <div className="h-full rounded-full bg-[#0066cc] transition-[width] duration-200" style={{ width: `${uploadProgress}%` }}></div>
+                      </div>
+                    )}
+                    {screenshots.length > 0 && status !== 'loading' && (
+                      <button type="button" onClick={() => setScreenshots([])} aria-label="Remove screenshots" className="text-[#7a7a7a] hover:text-[#ff3b30] text-[18px] leading-none">
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
                 </div>
-              )}
+                {uploadError && <p className="mt-1.5 text-[12px] text-[#ff3b30] font-medium">{uploadError}</p>}
+              </div>
 
               {rateLimitError && (
                 <div className="p-3 bg-[#ff9f0a]/5 text-[#ff9f0a] text-[12px] font-medium rounded-lg border border-[#ff9f0a]/10 flex items-center gap-2">
@@ -707,7 +799,7 @@ const Support = () => {
                 {status === 'loading' ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    Sending...
+                    {screenshots.length ? 'Uploading & sending...' : 'Sending...'}
                   </>
                 ) : (
                   'Send Message'
@@ -740,18 +832,18 @@ const Footer = () => {
           <div>
             <h4 className="text-[14px] font-semibold text-[#1d1d1f] mb-3" style={{ letterSpacing: '-0.224px' }}>Product</h4>
             <ul>
-              <li><a href="#features" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Features</a></li>
-              <li><a href="#install" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Installation</a></li>
-              <li><a href="#" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Changelog</a></li>
+              <li><a href="/#features" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Features</a></li>
+              <li><a href="/#install" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Installation</a></li>
+              <li><a href="/" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Changelog</a></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-[14px] font-semibold text-[#1d1d1f] mb-3" style={{ letterSpacing: '-0.224px' }}>Support</h4>
             <ul>
-              <li><a href="#support" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Help Center</a></li>
+              <li><a href="/support" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Help Center</a></li>
               <li><a href="mailto:support@example.com" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Contact Us</a></li>
-              <li><a href="#" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Privacy Policy</a></li>
+              <li><a href="/" className="text-[14px] text-[#333] hover:text-[#0066cc] transition-colors leading-[2.4]" style={{ letterSpacing: '-0.224px' }}>Privacy Policy</a></li>
             </ul>
           </div>
         </div>
@@ -823,5 +915,13 @@ const App = () => {
     </div>
   );
 };
+
+export const SupportPage = () => (
+  <div className="min-h-screen bg-white text-[#1d1d1f]">
+    <Navbar onDownload={() => {}} />
+    <Support />
+    <Footer />
+  </div>
+);
 
 export default App;

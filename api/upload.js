@@ -28,16 +28,16 @@ export default async function handler(req, res) {
     }
 
     const formData = new FormData();
-    formData.append('reqtype', 'fileupload');
-    formData.append('fileToUpload', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
+    formData.append('files[]', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
 
-    const response = await fetch('https://catbox.moe/user/api.php', {
+    const response = await fetch('https://uguu.se/upload.php', {
       method: 'POST',
       body: formData,
     });
-    const url = (await response.text()).trim();
+    const result = await response.json();
+    const url = result.files?.[0]?.url;
 
-    if (!response.ok || !url.startsWith('http')) {
+    if (!response.ok || !result.success || !url?.startsWith('http')) {
       return res.status(502).json({ error: 'Image host rejected the upload.' });
     }
     return res.status(200).json({ url });

@@ -591,18 +591,18 @@ const Support = () => {
 
         request.onload = () => {
           if (request.status < 200 || request.status >= 300) {
-            reject(new Error('Screenshot upload failed'));
+            reject(new Error('Image upload failed'));
             return;
           }
           const url = JSON.parse(request.responseText).url;
           if (!url?.startsWith('http')) {
-            reject(new Error('Screenshot upload failed'));
+            reject(new Error('Image upload failed'));
             return;
           }
           resolve(url);
         };
 
-        request.onerror = () => reject(new Error('Screenshot upload failed'));
+        request.onerror = () => reject(new Error('Image upload failed'));
         request.send(formData);
       });
       uploadedUrls.push(screenshotUrl);
@@ -647,7 +647,7 @@ const Support = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          feedback: screenshotUrls.length ? `${message}\n\nScreenshots:\n${screenshotUrls.join('\n')}` : message,
+          feedback: screenshotUrls.length ? `${message}\n\nImages:\n${screenshotUrls.join('\n')}` : message,
         }),
       });
 
@@ -748,7 +748,7 @@ const Support = () => {
                     placeholder="How can we help?"
                   ></textarea>
                   <div className="flex items-center gap-2 px-3 py-2 border-t border-[#e0e0e0]">
-                    <label htmlFor="screenshot" className="inline-flex items-center gap-1.5 text-[12px] text-[#7a7a7a] hover:text-[#0066cc] cursor-pointer transition-colors" title="Attach screenshots">
+                    <label htmlFor="screenshot" className="inline-flex items-center gap-1.5 text-[12px] text-[#7a7a7a] hover:text-[#0066cc] cursor-pointer transition-colors" title="Attach images">
                       <Paperclip className="w-4 h-4" />
                       {screenshots.length === 0 && <span>Add Attachment</span>}
                       <input
@@ -774,7 +774,7 @@ const Support = () => {
                       </div>
                     )}
                     {screenshots.length > 0 && status !== 'loading' && (
-                      <button type="button" onClick={() => setScreenshots([])} aria-label="Remove screenshots" className="text-[#7a7a7a] hover:text-[#ff3b30] text-[18px] leading-none">
+                      <button type="button" onClick={() => setScreenshots([])} aria-label="Remove images" className="text-[#7a7a7a] hover:text-[#ff3b30] text-[18px] leading-none">
                         <X className="w-3.5 h-3.5" />
                       </button>
                     )}

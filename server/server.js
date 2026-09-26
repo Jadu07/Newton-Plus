@@ -90,19 +90,22 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
 
   try {
     const formData = new FormData();
-    formData.append('files[]', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
+    formData.append('reqtype', 'fileupload');
+    formData.append('fileToUpload', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
 
-    const response = await fetch('https://uguu.se/upload.php', {
+    const response = await fetch('https://catbox.moe/user/api.php', {
       method: 'POST',
       body: formData,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      }
     });
-    const result = await response.json();
-    const url = result.files?.[0]?.url;
+    const url = await response.text();
 
-    if (!response.ok || !result.success || !url?.startsWith('http')) {
+    if (!response.ok || !url?.startsWith('http')) {
       return res.status(502).json({ error: 'Image host rejected the upload.' });
     }
-    return res.json({ url });
+    return res.json({ url: url.trim() });
   } catch (err) {
     console.error('Upload error:', err.message);
     return res.status(502).json({ error: 'Image upload failed.' });

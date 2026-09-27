@@ -28,22 +28,19 @@ export default async function handler(req, res) {
     }
 
     const formData = new FormData();
-    formData.append('reqtype', 'fileupload');
-    formData.append('fileToUpload', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
+    formData.append('file', new Blob([req.file.buffer], { type: req.file.mimetype }), req.file.originalname);
 
-    const response = await fetch('https://catbox.moe/user/api.php', {
+    const response = await fetch('https://kappa.lol/api/upload', {
       method: 'POST',
-      body: formData,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-      }
+      body: formData
     });
-    const url = await response.text();
+    
+    const data = await response.json();
 
-    if (!response.ok || !url?.startsWith('http')) {
+    if (!response.ok || !data?.link) {
       return res.status(502).json({ error: 'Image host rejected the upload.' });
     }
-    return res.status(200).json({ url: url.trim() });
+    return res.status(200).json({ url: data.link });
   } catch (error) {
     console.error('Upload error:', error.message);
     return res.status(502).json({ error: 'Image upload failed.' });
